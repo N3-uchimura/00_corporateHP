@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <%- include("./partials/head.ejs") %>
+
+  <body>
+    <div id="container">
+      <%- include("./partials/header.ejs") %>
+      <div id="contents">
+        <main>
+          <section class="yometia">
+            <h2><%= yometia.yometiahead() %></h2>
+            <p>
+              <%= yometia.yometiacontent1_1() %><br />
+              <%= yometia.yometiacontent1_2() %>
+            </p>
+            <div class="flex-thumbnails">
+              <div class="thumbnail-view-parts"></div>
+              <div class="thumbnail-parts">
+                <img src="/images/book.jpg" alt="" />
+                <img src="/images/author.jpg" alt="" />
+                <img src="/images/character.jpg" alt="" />
+                <img src="/images/bookdetail.jpg" alt="" />
+                <img src="/images/authordetail.jpg" alt="" />
+                <img src="/images/bookreading.jpg" alt="" />
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+      <%- include("./partials/footer.ejs") %>
+    </div>
+  </body>
+</html>

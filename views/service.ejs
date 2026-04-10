@@ -10,16 +10,16 @@
           <section>
             <h2 class="c">
               <span class="fade-in-text">Service</span
-              ><span class="hosoku">サービスのご案内</span>
+              ><span class="hosoku"><%= service.servicehead() %></span>
             </h2>
             <div class="list-grid1">
               <div class="list">
                 <figure><img src="/images/sample1.jpg" alt="" /></figure>
                 <div class="text">
-                  <h4>朗読アプリ「読みティア」</h4>
-                  <p>青空文庫の5000作品を聞き放題！</p>
+                  <h4><%= service.servicetitle1() %></h4>
+                  <p><%= service.servicecontent1_1() %></p>
                 </div>
-                <p class="btn"><a href="/yomitia">詳しくみる</a></p>
+                <p class="btn"><a href="/yometia"><%= common.detail() %></a></p>
               </div>
             </div>
           </section>

@@ -179,6 +179,14 @@ section+section {
 	margin-top: 3rem;
 }
 
+.lang {
+	border: none;
+	cursor: pointer;
+	outline: none;
+	padding: 0;
+	appearance: none;
+}
+
 
 /*リンクテキスト全般の設定
 ---------------------------------------------------------------------------*/
@@ -222,7 +230,7 @@ body:not(.home) #container {
 @media screen and (max-width:600px) {
 
 	#contents {
-		padding-top: 80px;
+		padding-top: 20px;
 		/*コンテンツ内の上の余白だけ上書き*/
 	}
 
@@ -240,7 +248,7 @@ header {
 	align-items: center;
 	/*垂直揃えの指定。天地中央に配置されるように。*/
 	justify-content: space-between;
-	height: 70px;
+	height: 50px;
 	/*ヘッダーの高さ*/
 	padding: 1vw 3vw;
 	/*ヘッダー内の余白。上下、左右への順番。*/
@@ -443,8 +451,8 @@ a.ddmenu::before {
 /*３本バーを囲むブロック*/
 #menubar_hdr {
 	animation: opa1 0s 0.2s both;
-	position: fixed;
-	z-index: 101;
+	position: absolute;
+	z-index: 1010000;
 	cursor: pointer;
 	right: 3vw;
 	/*右からの配置場所指定*/
@@ -841,6 +849,7 @@ animationの行の「0.05s」が文字の出現のなめらかさで、大きい
 
 /*ボックス１個あたり*/
 .list-grid1 .list {
+	margin: 1rem;
 	padding: 1rem;
 	/*ボックス内の余白*/
 	background: #fff;
@@ -950,32 +959,58 @@ animationの行の「0.05s」が文字の出現のなめらかさで、大きい
 	/*三角形の形を作っています*/
 }
 
+/*画面幅800px以上の追加指定*/
+@media screen and (min-width:800px) {
 
-/*詳細ページのサムネイル切り替えブロック
----------------------------------------------------------------------------*/
-/*大きな画像が表示されるブロック*/
-.thumbnail-view-parts {
-	max-width: 1000px;
-	/*最大幅*/
-	margin: 0 auto 1rem;
-	/*ブロック要素を中央に配置。下に1文字分のマージンをとる。*/
-	text-align: center;
-	/*画像が小さい場合でもセンタリングされるように*/
-}
+	/*listブロック全体を囲むブロック*/
+	.list-grid1 {
+		grid-template-columns: repeat(2, 1fr);
+		/*3列にする指定。4列にしたければrepeat(4, 1fr)とする。*/
+		gap: 1rem;
+		/*ブロックの間に空けるマージン的な指定*/
+	}
 
-/*サムネイル全体を囲むブロック*/
-.thumbnail-parts {
-	display: flex;
-	/*flexを使う指定*/
-	justify-content: center;
-	/*並びかたの種類の指定。これはセンタリングする指定。*/
-	margin-bottom: 2rem;
-	/*下に空けるスペース。２文字分。*/
+
+	.yometia {
+		width: 1000px;
+		height: 1000px;
+		margin: 0 auto;
+	}
+
+	/*詳細ページのサムネイル切り替えブロック
+	---------------------------------------------------------------------------*/
+	.flex-thumbnails {
+		display: flex;
+	}
+
+	/*大きな画像が表示されるブロック*/
+	.thumbnail-view-parts {
+		max-width: 1000px;
+		height: 484px;
+		/*最大幅*/
+		margin: 10px auto;
+		/*ブロック要素を中央に配置。下に1文字分のマージンをとる。*/
+		text-align: center;
+		/*画像が小さい場合でもセンタリングされるように*/
+	}
+
+	/*サムネイル全体を囲むブロック*/
+	.thumbnail-parts {
+		width: 400px;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		/*flexを使う指定*/
+		justify-content: center;
+		/*並びかたの種類の指定。これはセンタリングする指定。*/
+		margin-bottom: 2rem;
+		/*下に空けるスペース。２文字分。*/
+	}
 }
 
 /*サムネイル画像*/
 .thumbnail-parts img {
-	width: 100px;
+	width: 18%;
 	/*サムネイルの幅*/
 	margin: 2px;
 	/*サムネイル間のスペース*/
@@ -1052,6 +1087,12 @@ animationの行の「0.05s」が文字の出現のなめらかさで、大きい
 	.ta1 th {
 		width: 20%;
 		/*幅*/
+	}
+
+	/*サムネイル画像*/
+	.thumbnail-parts img {
+		width: 150px;
+		height: auto;
 	}
 
 }

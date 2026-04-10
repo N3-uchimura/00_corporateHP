@@ -2,7 +2,7 @@
  * form.ts
  **
  * function：メイン
-**/
+ **/
 
 'use strict';
 
@@ -12,17 +12,33 @@ import { myConst } from './consts/globalvariables';
 // モジュール定義
 import * as path from 'node:path'; // パス用
 import { config as dotenv } from 'dotenv'; // 環境変数用
+import geoip from 'geoip-lite';
 import express from 'express'; // http通信用
 import helmet from 'helmet'; // XSS対策用
 import { xss } from 'express-xss-sanitizer'; // サニタイズ用
 import Logger from './class/Logger'; // ロガー
+import NodeCache from 'node-cache'; // node-cache
+import {
+  commonPage,
+  indexPage,
+  servicePage,
+  yometiaPage,
+  teamPage,
+  contactPage,
+  finishPage,
+} from './i18n'; // 多言語対応
 import SQL from './class/MySqlJoinShort'; // DB
 
 /// モジュール設定
 // 環境変数
 dotenv({ path: path.join(__dirname, '.env') });
 // ロガー設定
-const logger: Logger = new Logger(myConst.COMPANY_NAME, myConst.APP_NAME, undefined, myConst.LOG_LEVEL);
+const logger: Logger = new Logger(
+  myConst.COMPANY_NAME,
+  myConst.APP_NAME,
+  undefined,
+  myConst.LOG_LEVEL,
+);
 // DB設定
 const myDB: SQL = new SQL(
   process.env.SQL_HOST!, // ホスト名
@@ -32,6 +48,8 @@ const myDB: SQL = new SQL(
   process.env.SQL_DBNAME!, // DB名
   logger, // ロガー
 );
+// cache instance
+const cacheMaker: NodeCache = new NodeCache();
 logger.info('configuration started');
 // ポート番号
 const defaultPort: number = Number(process.env.SERVER_PORT);
@@ -41,7 +59,7 @@ app.use(express.json()); // json設定
 app.use(
   express.urlencoded({
     extended: true, // body parser使用
-  })
+  }),
 );
 app.use(express.static(path.join(__dirname, 'public'))); // public使用
 app.set('views', path.join(__dirname, 'views')); // views使用
@@ -52,27 +70,73 @@ app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
-        "script-src": [
+        'script-src': [
           "'self'",
           "'unsafe-inline'",
-          "cdnjs.cloudflare.com",
-          "ajax.googleapis.com",
+          'cdnjs.cloudflare.com',
+          'ajax.googleapis.com',
+          'cdn.jsdelivr.net',
         ],
-        "img-src": ["'self'", "data: image:", "http://www.w3.org/2000/svg"],
-        "connect-src": ["'self'", "cdnjs.cloudflare.com"],
+        'img-src': ["'self'", 'data: image:', 'http://www.w3.org/2000/svg'],
+        'connect-src': ["'self'", 'cdnjs.cloudflare.com', 'cdn.jsdelivr.net'],
       },
     },
   }),
 );
 logger.info('corporate: configuration completed');
 
+/// get
 // トップ画面
-app.get('/', async (_: any, res: any) => {
+app.get('/', async (req: any, res: any) => {
   try {
     logger.debug('corporate: top get');
+    // 対象言語
+    let language: string = 'ja';
+    // 一般データ
+    let common: any;
+    // 対象データ
+    let content: any;
+    // 対象言語
+    const prelanguage: string = cacheMaker.get('language') ?? 'ja';
+    // 日本語のみ
+    if (prelanguage == 'ja') {
+      // IPアドレス
+      const ip: string =
+        req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+      // 対象国
+      const geo: any = geoip.lookup(ip);
+      // 日本語以外なら英語
+      if (geo) {
+        if (geo.country != 'JP') {
+          language = 'en';
+        }
+      }
+      // cache
+      cacheMaker.set('language', language);
+    } else {
+      language = prelanguage;
+    }
+    // 日本語一般
+    const jaCommon: any = commonPage.build('ja');
+    // 英語一般
+    const enCommon: any = commonPage.build('en');
+    // 日本語トップページ
+    const jaIndex: any = indexPage.build('ja');
+    // 英語トップページ
+    const enIndex: any = indexPage.build('en');
+    // 言語切り替え
+    if (language == 'ja') {
+      common = jaCommon;
+      content = jaIndex;
+    } else {
+      common = enCommon;
+      content = enIndex;
+    }
     // トップ画面
-    res.render('index', { title: 'NUMTHREE -moderate future-' });
-
+    res.render('index', {
+      common: common,
+      data: content,
+    });
   } catch (e: unknown) {
     logger.error(e);
     // エラー
@@ -87,9 +151,30 @@ app.get('/', async (_: any, res: any) => {
 app.get('/service', async (_: any, res: any) => {
   try {
     logger.debug('corporate: service get');
-    // トップ画面
-    res.render('service', { title: 'NUMTHREE -サービス一覧-' });
-
+    // 一般データ
+    let common: any;
+    // 対象データ
+    let service: any;
+    // 対象言語
+    const language = cacheMaker.get('language');
+    // 日本語一般
+    const jaCommon: any = commonPage.build('ja');
+    // 英語一般
+    const enCommon: any = commonPage.build('en');
+    // 日本語サービスページ
+    const jaService: any = servicePage.build('ja');
+    // 英語サービスページ
+    const enService: any = servicePage.build('en');
+    // 言語切り替え
+    if (language == 'ja') {
+      common = jaCommon;
+      service = jaService;
+    } else {
+      common = enCommon;
+      service = enService;
+    }
+    // サービス画面
+    res.render('service', { common: common, service: service });
   } catch (e: unknown) {
     logger.error(e);
     // エラー
@@ -101,12 +186,33 @@ app.get('/service', async (_: any, res: any) => {
 });
 
 // 嫁ティア画面
-app.get('/yomitia', async (_: any, res: any) => {
+app.get('/yometia', async (_: any, res: any) => {
   try {
     logger.debug('corporate: yometia get');
+    // 一般データ
+    let common: any;
+    // 対象データ
+    let yometia: any;
+    // 対象言語
+    const language = cacheMaker.get('language');
+    // 日本語一般
+    const jaCommon: any = commonPage.build('ja');
+    // 英語一般
+    const enCommon: any = commonPage.build('en');
+    // 日本語嫁ティアページ
+    const jaYometia: any = yometiaPage.build('ja');
+    // 英語嫁ティアページ
+    const enYometia: any = yometiaPage.build('en');
+    // 言語切り替え
+    if (language == 'ja') {
+      common = jaCommon;
+      yometia = jaYometia;
+    } else {
+      common = enCommon;
+      yometia = enYometia;
+    }
     // トップ画面
-    res.render('yomitia', { title: 'NUMTHREE -朗読アプリ「読みティア」-' });
-
+    res.render('yometia', { common: common, yometia: yometia });
   } catch (e: unknown) {
     logger.error(e);
     // エラー
@@ -121,9 +227,30 @@ app.get('/yomitia', async (_: any, res: any) => {
 app.get('/team', async (_: any, res: any) => {
   try {
     logger.debug('corporate: team get');
+    // 一般データ
+    let common: any;
+    // 対象データ
+    let team: any;
+    // 対象言語
+    const language = cacheMaker.get('language');
+    // 日本語一般
+    const jaCommon: any = commonPage.build('ja');
+    // 英語一般
+    const enCommon: any = commonPage.build('en');
+    // 日本語チームページ
+    const jaTeam: any = teamPage.build('ja');
+    // 英語サービスページ
+    const enTeam: any = teamPage.build('en');
+    // 言語切り替え
+    if (language == 'ja') {
+      common = jaCommon;
+      team = jaTeam;
+    } else {
+      common = enCommon;
+      team = enTeam;
+    }
     // トップ画面
-    res.render('team', { title: 'NUMTHREE -チーム概要-' });
-
+    res.render('team', { common: common, team: team });
   } catch (e: unknown) {
     logger.error(e);
     // エラー
@@ -134,13 +261,34 @@ app.get('/team', async (_: any, res: any) => {
   }
 });
 
-// フォーム画面
+// 問い合わせ画面
 app.get('/contact', async (_: any, res: any) => {
   try {
     logger.debug('corporate: contact get');
-    // 成功
-    res.render('contact', { title: 'NUMTHREE -お問い合わせ-' });
-
+    // 一般データ
+    let common: any;
+    // 対象データ
+    let contact: any;
+    // 対象言語
+    const language = cacheMaker.get('language');
+    // 日本語一般
+    const jaCommon: any = commonPage.build('ja');
+    // 英語一般
+    const enCommon: any = commonPage.build('en');
+    // 日本語問い合わせページ
+    const jaContact: any = contactPage.build('ja');
+    // 英語問い合わせページ
+    const enContact: any = contactPage.build('en');
+    // 言語切り替え
+    if (language == 'ja') {
+      common = jaCommon;
+      contact = jaContact;
+    } else {
+      common = enCommon;
+      contact = enContact;
+    }
+    // 問い合わせ画面
+    res.render('contact', { common: common, contact: contact, language: language });
   } catch (e: unknown) {
     logger.error(e);
     // エラー
@@ -155,9 +303,30 @@ app.get('/contact', async (_: any, res: any) => {
 app.get('/confirm', async (_: any, res: any) => {
   try {
     logger.debug('corporate: form confirm get');
+    // 一般データ
+    let common: any;
+    // 対象データ
+    let contact: any;
+    // 対象言語
+    const language = cacheMaker.get('language');
+    // 日本語一般
+    const jaCommon: any = commonPage.build('ja');
+    // 英語一般
+    const enCommon: any = commonPage.build('en');
+    // 日本語問い合わせページ
+    const jaContact: any = contactPage.build('ja');
+    // 英語問い合わせページ
+    const enContact: any = contactPage.build('en');
+    // 言語切り替え
+    if (language == 'ja') {
+      common = jaCommon;
+      contact = jaContact;
+    } else {
+      common = enCommon;
+      contact = enContact;
+    }
     // 確認画面
-    res.render('confirm', { title: 'NUMTHREE -確認画面-' });
-
+    res.render('confirm', { common: common, contact: contact });
   } catch (e: unknown) {
     logger.error(e);
     // エラー
@@ -168,11 +337,34 @@ app.get('/confirm', async (_: any, res: any) => {
   }
 });
 
+/// post
 // フォーム登録
 app.post('/form', async (req: any, res: any) => {
   try {
     // モード
     logger.info('corporate: form post');
+    // 一般データ
+    let common: any;
+    // 対象データ
+    let contact: any;
+    // 対象言語
+    const language = cacheMaker.get('language');
+    // 日本語一般
+    const jaCommon: any = commonPage.build('ja');
+    // 英語一般
+    const enCommon: any = commonPage.build('en');
+    // 日本語問い合わせページ
+    const jaContact: any = contactPage.build('ja');
+    // 英語問い合わせページ
+    const enContact: any = contactPage.build('en');
+    // 言語切り替え
+    if (language == 'ja') {
+      common = jaCommon;
+      contact = jaContact;
+    } else {
+      common = enCommon;
+      contact = enContact;
+    }
     // 受け取りデータ
     const customername: any = req.body.customername ?? '';
     const customermail: any = req.body.customermail ?? '';
@@ -192,13 +384,32 @@ app.post('/form', async (req: any, res: any) => {
     }
     // 確認画面
     res.render('confirm', {
-      title: 'NUMTHREE -確認画面-',
+      common: common,
+      contact: contact,
       customerid: insertedId,
       customername: customername,
       customermail: customermail,
       content: content,
     });
+  } catch (e: unknown) {
+    logger.error(e);
+    // エラー
+    res.render('error', {
+      title: '404',
+      message: 'Not Found',
+    });
+  }
+});
 
+// 言語変更
+app.post('/language', async (req: any, res: any) => {
+  try {
+    // モード
+    logger.info('corporate: language post');
+    // cache
+    cacheMaker.set('language', req.body.language);
+    // res
+    res.send('ok');
   } catch (e: unknown) {
     logger.error(e);
     // エラー
@@ -239,9 +450,30 @@ app.post('/confirmed', async (req: any, res: any) => {
       // 対象なし
       logger.trace('mysql: updateData empty');
     }
+    // 一般データ
+    let common: any;
+    // 対象データ
+    let finish: any;
+    // 対象言語
+    const language = cacheMaker.get('language');
+    // 日本語一般
+    const jaCommon: any = commonPage.build('ja');
+    // 英語一般
+    const enCommon: any = commonPage.build('en');
+    // 日本語チームページ
+    const jaFinish: any = finishPage.build('ja');
+    // 英語サービスページ
+    const enFinish: any = finishPage.build('en');
+    // 言語切り替え
+    if (language == 'ja') {
+      common = jaCommon;
+      finish = jaFinish;
+    } else {
+      common = enCommon;
+      finish = enFinish;
+    }
     // 確認画面
-    res.render('finish', { title: 'NUMTHREE -完了画面-' });
-
+    res.render('finish', { common: common, finish: finish });
   } catch (e: unknown) {
     logger.error(e);
     // エラー
@@ -266,13 +498,15 @@ app.use(
       title: '404',
       message: 'Not Found',
     });
-  }
+  },
 );
 
 // 待機
 app.listen(defaultPort, () => {
   try {
-    logger.info(`${myConst.SERVER_NAME} listening at ${myConst.DEFAULT_URL}:${defaultPort}`);
+    logger.info(
+      `${myConst.SERVER_NAME} listening at ${myConst.DEFAULT_URL}:${defaultPort}`,
+    );
   } catch (e) {
     logger.error(e);
   }

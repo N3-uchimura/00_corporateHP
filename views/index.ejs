@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="<%= common.language() %>">
   <%- include("./partials/head.ejs") %>
 
   <body class="home">
@@ -8,32 +8,32 @@
       <aside id="mainimg">
         <div class="slide slide1">
           <div>
-            <h1>加速から最適化</h1>
+            <h1><%= data.headtitle1() %></h1>
             <p>
-              前進を止め、効率化する<br />
-              新しさより伝統、そこからの創造
+             <%= data.headcontent1_1() %><br />
+              <%= data.headcontent1_2() %>
             </p>
-            <p class="btn-border-radius"><a href="#">もっと詳しくみる</a></p>
+            <p class="btn-border-radius"><a href="#"><%= common.detail() %></a></p>
           </div>
         </div>
         <div class="slide slide2">
           <div>
-            <h1>革新ではなく改良</h1>
+            <h1><%= data.headtitle2() %></h1>
             <p>
-              増やすのではなく、整理する<br />
-              今あるものを見つめる、そこからの発見
+              <%= data.headcontent2_1() %><br />
+              <%= data.headcontent2_2() %>
             </p>
-            <p class="btn-border-radius"><a href="#">もっと詳しくみる</a></p>
+            <p class="btn-border-radius"><a href="#"><%= common.detail() %></a></p>
           </div>
         </div>
         <div class="slide slide3">
           <div>
-            <h1>二軸ではなく三軸</h1>
+            <h1><%= data.headtitle3() %></h1>
             <p>
-              対立からナムスリーへ<br />
-              二極化でなく多次元化、そこからの融和
+              <%= data.headcontent3_1() %><br />
+             <%= data.headcontent3_2() %>
             </p>
-            <p class="btn-border-radius"><a href="#">もっと詳しくみる</a></p>
+            <p class="btn-border-radius"><a href="#"><%= common.detail() %></a></p>
           </div>
         </div>
       </aside>
@@ -42,27 +42,26 @@
           <section class="bg1">
             <h2 class="c">
               <span class="fade-in-text">Information</span
-              ><span class="hosoku">ご案内</span>
+              ><span class="hosoku"><%= data.information() %></span>
             </h2>
             <div class="list-grid1">
               <div class="list">
-                <figure><img src="/images/title.jpg" alt="" /></figure>
                 <div class="text">
-                  <h4>朗読アプリ</h4>
-                  <p>「読みティア」</p>
+                  <h4><%= data.content1() %></h4>
+                  <p><%= data.content1_1() %></p>
                 </div>
-                <p class="btn"><a href="/yomitia">詳しくみる</a></p>
+                <p class="btn"><a href="/yometia"><%= common.detail() %></a></p>
               </div>
             </div>
           </section>
           <section>
             <h2>
               <span class="fade-in-text">What's New</span
-              ><span class="hosoku">お知らせ</span>
+              ><span class="hosoku"><%= data.news() %></span>
             </h2>
             <dl class="new">
-              <dt>2026/04/01<span>その他</span></dt>
-              <dd>NUMTHREE 始動</dd>
+              <dt>2026/04/01<span><%= data.news1() %></span></dt>
+              <dd><%= data.news1_1() %></dd>
             </dl>
           </section>
         </main>

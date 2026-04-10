@@ -9,11 +9,11 @@
       <div id="contents">
         <main>
           <section>
-            <h2>お問い合わせ<span class="hosoku">Contact</span></h2>
+            <h2><%= contact.contacthead() %></h2>
             <form id="registForm" name="form1" method="post" action="/form">
               <table class="ta1">
                 <tr>
-                  <th width="150">お名前<span style="color: red">※</span></th>
+                  <th width="150"><%= contact.namehead() %><span style="color: red">※</span></th>
                   <td>
                     <input
                       id="customername"
@@ -28,7 +28,7 @@
                 </tr>
                 <tr>
                   <th width="150">
-                    メールアドレス<span style="color: red">※</span>
+                    <%= contact.mailhead() %><span style="color: red">※</span>
                   </th>
                   <td>
                     <input
@@ -43,7 +43,7 @@
                   </td>
                 </tr>
                 <tr>
-                  <th>お問い合わせ内容<span style="color: red">※</span></th>
+                  <th><%= contact.contenthead() %><span style="color: red">※</span></th>
                   <td>
                     <textarea
                       id="content"
@@ -57,10 +57,10 @@
               </table>
               <p class="c">
                 <button type="submit" class="button-g button-6 button-standard">
-                  送信
+                  <%= contact.sendbutton() %>
                 </button>
                 <button type="reset" class="button-g button-standard">
-                  リセット
+                  <%= contact.resetbutton() %>
                 </button>
               </p>
             </form>
@@ -68,6 +68,11 @@
         </main>
       </div>
       <%- include("./partials/footer.ejs") %>
+      <script>
+        $(function () {
+          getGlobalLang("<%= language %>");
+        });
+      </script>
       <script src="/js/validation.js"></script>
     </div>
   </body>

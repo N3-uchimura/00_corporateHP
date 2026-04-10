@@ -7,13 +7,49 @@
         <li>
           <a href="/service">SERVICE</a>
           <ul>
-            <li><a href="/yomitia">朗読アプリ「読みティア」</a></li>
+            <li><a href="/yometia"><%= common.service1() %></a></li>
           </ul>
         </li>
         <li><a href="/team">TEAM</a></li>
         <li><a href="/contact">CONTACT</a></li>
+        <li>
+          <a href="">LANGUAGE</a>
+          <ul>
+            <li>
+              <a href="">
+              <% if( common.language()=='ja' ) { %>
+                <span id="en" class="lang" onclick="changeLang('en')">英語</span>
+              <% } else { %>
+                <span id="ja" class="lang" onclick="changeLang('ja')">JAPANESE</span>
+              <% } %>
+              </a>
+            </li>
+          </ul>
+        </li>
       </ul>
     </nav>
     <div class="sh"></div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    // 言語変更ボタン
+    const buttons = document.querySelectorAll('.lang');
+    // クリック検知
+    buttons.forEach(element => {
+      element.addEventListener('click', (event) => {
+          changeLang(event.target.id); 
+      });
+    });
+    // 言語変更
+    const changeLang = (language) => {
+      // 遷移
+      const url = axios.post("https://numthree.net/language", { language: language })
+        .then(() => {
+          window.location.reload();
+        })
+        .catch(err => {
+          console.log("err:", err);
+        });
+    }
+  </script>
 </header>
