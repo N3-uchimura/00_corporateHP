@@ -12,7 +12,6 @@ import { myConst } from './consts/globalvariables';
 // モジュール定義
 import * as path from 'node:path'; // パス用
 import { config as dotenv } from 'dotenv'; // 環境変数用
-import geoip from 'geoip-lite';
 import express from 'express'; // http通信用
 import helmet from 'helmet'; // XSS対策用
 import { xss } from 'express-xss-sanitizer'; // サニタイズ用
@@ -25,6 +24,7 @@ import {
   yometiaPage,
   teamPage,
   contactPage,
+  privacyPage,
   finishPage,
 } from './i18n'; // 多言語対応
 import SQL from './class/MySqlJoinShort'; // DB
@@ -96,26 +96,35 @@ app.get('/', async (req: any, res: any) => {
     let common: any;
     // 対象データ
     let content: any;
-    // 対象言語
-    const prelanguage: string = cacheMaker.get('language') ?? 'ja';
-    // 日本語のみ
-    if (prelanguage == 'ja') {
-      // IPアドレス
-      const ip: string =
-        req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-      // 対象国
-      const geo: any = geoip.lookup(ip);
-      // 日本語以外なら英語
-      if (geo) {
-        if (geo.country != 'JP') {
+    // セット済み言語
+    const presetLanguage: any = cacheMaker.get('language');
+    // セット済み言語判定
+    if (!presetLanguage) {
+      // 優先言語
+      const acceptLanguage = req.headers['accept-language'];
+      // 対象有
+      if (acceptLanguage) {
+        // パース
+        const languages: any = acceptLanguage.split(',');
+        // 一番優先度の高い言語（先頭）を抽出
+        const primaryLang = languages[0].split(';')[0];
+        // 言語判定
+        if (primaryLang.includes('ja')) {
+          // 日本語
+          language = 'ja';
+        } else {
+          // それ以外は英語
           language = 'en';
         }
+      } else {
+        // それ以外は英語
+        language = 'en';
       }
-      // cache
-      cacheMaker.set('language', language);
     } else {
-      language = prelanguage;
+      language = presetLanguage;
     }
+    // cache
+    cacheMaker.set('language', language);
     // 日本語一般
     const jaCommon: any = commonPage.build('ja');
     // 英語一般
@@ -175,6 +184,7 @@ app.get('/service', async (_: any, res: any) => {
     }
     // サービス画面
     res.render('service', { common: common, service: service });
+
   } catch (e: unknown) {
     logger.error(e);
     // エラー
@@ -213,6 +223,7 @@ app.get('/yometia', async (_: any, res: any) => {
     }
     // トップ画面
     res.render('yometia', { common: common, yometia: yometia });
+
   } catch (e: unknown) {
     logger.error(e);
     // エラー
@@ -251,6 +262,47 @@ app.get('/team', async (_: any, res: any) => {
     }
     // トップ画面
     res.render('team', { common: common, team: team });
+
+  } catch (e: unknown) {
+    logger.error(e);
+    // エラー
+    res.render('error', {
+      title: '404',
+      message: 'Not Found',
+    });
+  }
+});
+
+// プライバシーポリシー
+app.get('/privacy', async (req: any, res: any) => {
+  try {
+    // モード
+    logger.info('corporate: privacy policy post');
+    // 一般データ
+    let common: any;
+    // プライバシーデータ
+    let privacy: any;
+    // 対象言語
+    const language = cacheMaker.get('language') ?? 'en';
+    // 日本語一般
+    const jaCommon: any = commonPage.build('ja');
+    // 英語一般
+    const enCommon: any = commonPage.build('en');
+    // 日本語チームページ
+    const jaPrivacy: any = privacyPage.build('ja');
+    // 英語サービスページ
+    const enPrivacy: any = privacyPage.build('en');
+    // 言語切り替え
+    if (language == 'ja') {
+      common = jaCommon;
+      privacy = jaPrivacy;
+    } else {
+      common = enCommon;
+      privacy = enPrivacy;
+    }
+    // 確認画面
+    res.render('privacy', { common: common, privacy: privacy });
+
   } catch (e: unknown) {
     logger.error(e);
     // エラー
@@ -289,6 +341,7 @@ app.get('/contact', async (_: any, res: any) => {
     }
     // 問い合わせ画面
     res.render('contact', { common: common, contact: contact, language: language });
+
   } catch (e: unknown) {
     logger.error(e);
     // エラー
@@ -326,7 +379,15 @@ app.get('/confirm', async (_: any, res: any) => {
       contact = enContact;
     }
     // 確認画面
-    res.render('confirm', { common: common, contact: contact });
+    res.render('confirm', {
+      common: common,
+      contact: contact,
+      customerid: '',
+      customername: '',
+      customermail: '',
+      content: '',
+    });
+
   } catch (e: unknown) {
     logger.error(e);
     // エラー
@@ -391,6 +452,7 @@ app.post('/form', async (req: any, res: any) => {
       customermail: customermail,
       content: content,
     });
+
   } catch (e: unknown) {
     logger.error(e);
     // エラー
@@ -410,6 +472,7 @@ app.post('/language', async (req: any, res: any) => {
     cacheMaker.set('language', req.body.language);
     // res
     res.send('ok');
+
   } catch (e: unknown) {
     logger.error(e);
     // エラー
@@ -435,10 +498,10 @@ app.post('/confirmed', async (req: any, res: any) => {
     // 対象データ
     const updateArgs: updateargs = {
       table: 'contact', // テーブル
-      setcol: ['ready'], // 準備完了
+      setcol: ['usable'], // 準備完了
       setval: [1], // 完了
-      selcol: ['id', 'usable'], // 対象
-      selval: [customerid, 1], // 対象値
+      selcol: ['id'], // 対象
+      selval: [customerid], // 対象値
     };
     // 更新処理
     const updateResult = await myDB.updateDB(updateArgs);
@@ -452,17 +515,17 @@ app.post('/confirmed', async (req: any, res: any) => {
     }
     // 一般データ
     let common: any;
-    // 対象データ
+    // 完了データ
     let finish: any;
     // 対象言語
-    const language = cacheMaker.get('language');
+    const language = cacheMaker.get('language') ?? 'en';
     // 日本語一般
     const jaCommon: any = commonPage.build('ja');
     // 英語一般
     const enCommon: any = commonPage.build('en');
-    // 日本語チームページ
+    // 日本語完了ページ
     const jaFinish: any = finishPage.build('ja');
-    // 英語サービスページ
+    // 英語完了ページ
     const enFinish: any = finishPage.build('en');
     // 言語切り替え
     if (language == 'ja') {
@@ -474,6 +537,7 @@ app.post('/confirmed', async (req: any, res: any) => {
     }
     // 確認画面
     res.render('finish', { common: common, finish: finish });
+
   } catch (e: unknown) {
     logger.error(e);
     // エラー
@@ -507,6 +571,7 @@ app.listen(defaultPort, () => {
     logger.info(
       `${myConst.SERVER_NAME} listening at ${myConst.DEFAULT_URL}:${defaultPort}`,
     );
+
   } catch (e) {
     logger.error(e);
   }

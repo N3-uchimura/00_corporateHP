@@ -1,72 +1,98 @@
 <!DOCTYPE html>
 <html lang="<%= common.language() %>">
-  <%- include("./partials/head.ejs") %>
+<%- include("./partials/head.ejs") %>
 
   <body class="home">
     <div id="container">
       <%- include("./partials/header.ejs") %>
-      <aside id="mainimg">
-        <div class="slide slide1">
-          <div>
-            <h1><%= data.headtitle1() %></h1>
-            <p>
-             <%= data.headcontent1_1() %><br />
-              <%= data.headcontent1_2() %>
-            </p>
-            <p class="btn-border-radius"><a href="#"><%= common.detail() %></a></p>
-          </div>
-        </div>
-        <div class="slide slide2">
-          <div>
-            <h1><%= data.headtitle2() %></h1>
-            <p>
-              <%= data.headcontent2_1() %><br />
-              <%= data.headcontent2_2() %>
-            </p>
-            <p class="btn-border-radius"><a href="#"><%= common.detail() %></a></p>
-          </div>
-        </div>
-        <div class="slide slide3">
-          <div>
-            <h1><%= data.headtitle3() %></h1>
-            <p>
-              <%= data.headcontent3_1() %><br />
-             <%= data.headcontent3_2() %>
-            </p>
-            <p class="btn-border-radius"><a href="#"><%= common.detail() %></a></p>
-          </div>
-        </div>
-      </aside>
-      <div id="contents">
-        <main>
-          <section class="bg1">
-            <h2 class="c">
-              <span class="fade-in-text">Information</span
-              ><span class="hosoku"><%= data.information() %></span>
-            </h2>
-            <div class="list-grid1">
-              <div class="list">
-                <div class="text">
-                  <h4><%= data.content1() %></h4>
-                  <p><%= data.content1_1() %></p>
-                </div>
-                <p class="btn"><a href="/yometia"><%= common.detail() %></a></p>
-              </div>
+        <aside id="mainimg">
+          <div class="slide slide1">
+            <div>
+              <h1>
+                <%= data.headtitle1() %>
+              </h1>
+              <p>
+                <%= data.headcontent1_1() %><br />
+                  <%= data.headcontent1_2() %>
+              </p>
+              <p class="btn-border-radius"><a href="#">
+                  <%= common.detail() %>
+                </a></p>
             </div>
-          </section>
-          <section>
-            <h2>
-              <span class="fade-in-text">What's New</span
-              ><span class="hosoku"><%= data.news() %></span>
-            </h2>
-            <dl class="new">
-              <dt>2026/04/01<span><%= data.news1() %></span></dt>
-              <dd><%= data.news1_1() %></dd>
-            </dl>
-          </section>
-        </main>
-      </div>
-      <%- include("./partials/footer.ejs") %>
+          </div>
+          <div class="slide slide2">
+            <div>
+              <h1>
+                <%= data.headtitle2() %>
+              </h1>
+              <p>
+                <%= data.headcontent2_1() %><br />
+                  <%= data.headcontent2_2() %>
+              </p>
+              <p class="btn-border-radius"><a href="#">
+                  <%= common.detail() %>
+                </a></p>
+            </div>
+          </div>
+          <div class="slide slide3">
+            <div>
+              <h1>
+                <%= data.headtitle3() %>
+              </h1>
+              <p>
+                <%= data.headcontent3_1() %><br />
+                  <%= data.headcontent3_2() %>
+              </p>
+              <p class="btn-border-radius"><a href="#">
+                  <%= common.detail() %>
+                </a></p>
+            </div>
+          </div>
+        </aside>
+        <div id="contents">
+          <main>
+            <section class="bg1">
+              <h2 class="c">
+                <span class="fade-in-text">Information</span><span class="hosoku">
+                  <%= data.information() %>
+                </span>
+              </h2>
+              <div class="list-grid1">
+                <div class="list">
+                  <div class="text">
+                    <figure><img src="/images/yometia.jpg" alt="" /></figure>
+                    <h4>
+                      <%= data.content1() %>
+                    </h4>
+                    <p>
+                      <%= data.content1_1() %>
+                    </p>
+                  </div>
+                  <p class="btn"><a href="/yometia">
+                      <%= common.detail() %>
+                    </a></p>
+                </div>
+              </div>
+            </section>
+            <section>
+              <h2>
+                <span class="fade-in-text">What's New</span><span class="hosoku">
+                  <%= data.news() %>
+                </span>
+              </h2>
+              <dl class="new">
+                <dt>2026/04/01<span>
+                    <%= data.news1() %>
+                  </span></dt>
+                <dd>
+                  <%= data.news1_1() %>
+                </dd>
+              </dl>
+            </section>
+          </main>
+        </div>
+        <%- include("./partials/footer.ejs") %>
     </div>
   </body>
+
 </html>

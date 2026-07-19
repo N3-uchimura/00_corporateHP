@@ -1,49 +1,57 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <%- include("./partials/head.ejs") %>
+<%- include("./partials/head.ejs") %>
   <link rel="stylesheet" href="/css/button.css" />
 
   <body>
     <div id="container">
       <%- include("./partials/header.ejs") %>
-      <div id="contents">
-        <main>
-          <section>
-            <h2><%= common.confirmhead() %><span class="hosoku">Contact</span></h2>
-            <form name="form1" method="post" action="/confirmed">
-              <table class="ta1">
-                <tr>
-                  <th width="150"><%= contact.namehead() %></th>
-                  <td><%= customername() %></td>
-                </tr>
-                <tr>
-                  <th width="150"><%= contact.mailhead() %></th>
-                  <td><%= customermail() %></td>
-                </tr>
-                <tr>
-                  <th><%= contact.contenthead() %></th>
-                  <td><%= content() %></td>
-                </tr>
-              </table>
-              <p class="c">
-                <button
-                  type="submit"
-                  class="button-g button-6 button-standard"
-                  onClick="document.form1.mode.value='reinput';document.form1.submit()"
-                >
-                  <%= contact.sendbutton() %>
-                </button>
-              </p>
-              <input
-                type="hidden"
-                name="customerid"
-                value="<%= customerid() %>"
-              />
-            </form>
-          </section>
-        </main>
-      </div>
-      <%- include("./partials/footer.ejs") %>
+        <div id="contents">
+          <main>
+            <section>
+              <h2>
+                <%= common.confirmhead() %><span class="hosoku">Contact</span>
+              </h2>
+              <form name="form1" method="post" action="/confirmed">
+                <table class="ta1">
+                  <tr>
+                    <th width="150">
+                      <%= contact.namehead() %>
+                    </th>
+                    <td>
+                      <%= customername %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th width="150">
+                      <%= contact.mailhead() %>
+                    </th>
+                    <td>
+                      <%= customermail %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th>
+                      <%= contact.contenthead() %>
+                    </th>
+                    <td>
+                      <%= content %>
+                    </td>
+                  </tr>
+                </table>
+                <p class="c">
+                  <button type="submit" class="button-g button-6 button-standard"
+                    onClick="document.form1.mode.value='reinput';document.form1.submit()">
+                    <%= contact.sendbutton() %>
+                  </button>
+                </p>
+                <input type="hidden" name="customerid" value="<%= customerid %>" />
+              </form>
+            </section>
+          </main>
+        </div>
+        <%- include("./partials/footer.ejs") %>
     </div>
   </body>
+
 </html>
