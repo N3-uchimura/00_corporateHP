@@ -83,7 +83,7 @@ body * {
 
 html,
 body {
-	height: 100%;
+	height: auto;
 	font-size: 13px;
 	/*基準となるフォントサイズ。*/
 }
@@ -567,6 +567,11 @@ main h3 {
 
 /*画面幅900px以上の追加指定*/
 @media screen and (min-width:900px) {
+
+	html,
+	body {
+		height: 2000px;
+	}
 
 	/*カラムで使う為の指定*/
 	main.column {
