@@ -3,35 +3,35 @@
   <%- include("./partials/head.ejs") %>
   <body>
     <main>
+      <section>
       <div id="container">
         <%- include("./partials/header.ejs") %>
         <div id="contents">
-          <section>
-            <h2><%= team.teamhead() %></h2>
-            <table class="ta1">
-              <tr>
-                <th><%= team.companyhead() %></th>
-                <td><%= team.companycontent() %></td>
-              </tr>
-              <tr>
-                <th><%= team.addresshead() %></th>
-                <td>
-                  〒812-0011<br /><%= team.addresscontent1() %>
-                </td>
-              </tr>
-              <tr>
-                <th><%= team.mailhead() %></th>
-                <td>info@numthree.net</td>
-              </tr>
-              <tr>
-                <th><%= team.staffhead() %></th>
-                <td><%= team.staffcontent() %></td>
-              </tr>
-            </table>
-          </section>
+          <h2><%= team.teamhead() %></h2>
+          <table class="ta1">
+            <tr>
+              <th><%= team.companyhead() %></th>
+              <td><%= team.companycontent() %></td>
+            </tr>
+            <tr>
+              <th><%= team.addresshead() %></th>
+              <td>
+                〒812-0011<br /><%= team.addresscontent1() %>
+              </td>
+            </tr>
+            <tr>
+              <th><%= team.mailhead() %></th>
+              <td>info@numthree.net</td>
+            </tr>
+            <tr>
+              <th><%= team.staffhead() %></th>
+              <td><%= team.staffcontent() %></td>
+            </tr>
+          </table>
         </div>
-        <%- include("./partials/footer.ejs") %>
       </div>
+      </section>
     </main>
+    <%- include("./partials/footer.ejs") %>
   </body>
 </html>

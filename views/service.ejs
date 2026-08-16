@@ -3,29 +3,39 @@
   <%- include("./partials/head.ejs") %>
 
   <body>
-    <div id="container">
-      <%- include("./partials/header.ejs") %>
-      <div id="contents">
-        <main>
-          <section>
+    <main>
+      <section>
+        <div id="container">
+          <%- include("./partials/header.ejs") %>
+          <div id="contents">
             <h2 class="c">
-              <span class="fade-in-text">Service</span
-              ><span class="hosoku"><%= service.servicehead() %></span>
+              <span class="fade-in-text"><%= service.servicehead() %></span>
             </h2>
             <div class="list-grid1">
               <div class="list">
-                <figure><img src="/images/sample1.jpg" alt="" /></figure>
+                <figure>
+                  <img src="/images/yometia_wide.png" alt="読めティア" />
+                </figure>
                 <div class="text">
-                  <h4><%= service.servicetitle1() %></h4>
-                  <p><%= service.servicecontent1_1() %></p>
+                  <h4>
+                    <%= service.servicetitle1() %>
+                  </h4>
+                  <p>
+                    <%= service.servicecontent1_1() %>
+                  </p>
                 </div>
-                <p class="btn"><a href="/yometia"><%= common.detail() %></a></p>
+                <p class="btn">
+                  <a href="/yometia">
+                    <%= common.detail() %>
+                  </a>
+                </p>
               </div>
             </div>
-          </section>
-        </main>
-      </div>
-      <%- include("./partials/footer.ejs") %>
-    </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <%- include("./partials/footer.ejs") %>
   </body>
+
 </html>

@@ -14,43 +14,43 @@ export const commonPage: any = createI18n(['ja', 'en'] as const).add({
   language: { ja: 'ja', en: 'en' },
   title: { ja: 'NUMTHREE -未来最適化集団-', en: 'NUMTHREE -optimize future-' },
   description: {
-    ja: '未来を最適化する、NUMTHREEの公式サイトです',
-    en: 'Optimize future. Official web site of NUMTHREE',
+    ja: '未来を最適化する、NUMTHREEの公式サイトです。',
+    en: 'Optimize future. Official web site of NUMTHREE.',
   },
   service1: { ja: '「読めティア」', en: 'YOMETIA' },
   detail: { ja: 'もっと詳しくみる', en: 'see more' },
   confirmhead: {
     ja: '確認画面',
-    en: 'confirm',
+    en: 'Confirm',
   },
 });
 
 export const indexPage: any = createI18n(['ja', 'en'] as const).add({
-  headtitle1: { ja: '加速から最適化', en: 'Accelation to optimization' },
+  headtitle1: { ja: '加速から最適化。', en: 'Accelation to optimization' },
   headcontent1_1: {
-    ja: '前進を止め、効率化する',
-    en: 'Stop going, streamlining',
+    ja: '前進を止め、効率化する。',
+    en: 'Stop going, streamlining.',
   },
   headcontent1_2: {
-    ja: '散らばった欠片を、再構成する',
-    en: 'Gather Scattered fragments, restruct',
+    ja: '散らばった欠片を、再構成する。',
+    en: 'Gather Scattered fragments, restruct.',
   },
-  headtitle2: { ja: '革新ではなく改良', en: 'Tradition, not new' },
+  headtitle2: { ja: '革新ではなく改良。', en: 'Tradition, not new.' },
   headcontent2_1: {
-    ja: '増やすのではなく、整理する',
-    en: 'Organize, not increase',
+    ja: '増やすのではなく、整理する。',
+    en: 'Organize, not increase.',
   },
   headcontent2_2: {
-    ja: '今あるものを見つめる、そこからの発見',
-    en: 'See what we have, and discover',
+    ja: '今あるものを見つめる、そこからの発見。',
+    en: 'See what we have, and discover.',
   },
-  headtitle3: { ja: '二軸ではなく三軸', en: 'Two-axis to three-axis' },
-  headcontent3_1: { ja: '対立からナムスリーへ', en: 'Conflict to numthree' },
+  headtitle3: { ja: '二軸ではなく三軸。', en: 'Two-axis to three-axis.' },
+  headcontent3_1: { ja: '対立からナムスリーへ', en: 'Conflict to numthree.' },
   headcontent3_2: {
-    ja: '二極化でなく多次元化、そこからの融和',
-    en: 'Polarize to higher dimensions, and harmony',
+    ja: '二極化でなく多次元化、そこからの融和。',
+    en: 'Polarize to higher dimensions, and harmony.',
   },
-  information: { ja: 'ご案内', en: 'Information' },
+  information: { ja: 'サービス', en: 'Information' },
   content1: { ja: '朗読アプリ', en: 'Audiobook app' },
   content1_1: { ja: '「読めティア」', en: 'YOMETIA' },
   news: { ja: 'お知らせ', en: 'News' },
@@ -59,28 +59,28 @@ export const indexPage: any = createI18n(['ja', 'en'] as const).add({
 });
 
 export const servicePage: any = createI18n(['ja', 'en'] as const).add({
-  servicehead: { ja: 'サービスのご案内', en: 'Introduction of service' },
+  servicehead: { ja: 'サービス', en: 'Service' },
   servicetitle1: {
-    ja: '朗読アプリ「読めティア」',
-    en: 'Audiobook app YOMETIA',
+    ja: '「読めティア」',
+    en: 'YOMETIA',
   },
   servicecontent1_1: {
-    ja: '青空文庫の5000超作品を聞き放題！',
-    en: 'Unlimited listening over 5000 literary works',
+    ja: '青空文庫の5000超作品を、いつでも聞き放題。',
+    en: 'Unlimited listening over 5000 literary works.',
   },
 });
 
 export const yometiaPage: any = createI18n(['ja', 'en'] as const).add({
   yometiahead: {
-    ja: '朗読アプリ「読めティア」',
-    en: 'Audiobook app YOMETIA',
+    ja: '「読めティア」',
+    en: 'YOMETIA',
   },
   yometiacontent1_1: {
-    ja: '青空文庫の5000冊超を丸ごと収録',
-    en: 'Unlimited listening over 5000 literary works',
+    ja: '青空文庫の5000冊超を、丸ごと収録。',
+    en: 'Unlimited listening over 5000 literary works.',
   },
   yometiacontent1_2: {
-    ja: 'いろいろなキャラクターの声で作品の朗読を楽しめます。',
+    ja: 'いろいろなキャラクターの声で、作品の朗読を楽しめます。',
     en: 'Enjoy so many works with wide variety of character voices.',
   },
 });
@@ -88,7 +88,7 @@ export const yometiaPage: any = createI18n(['ja', 'en'] as const).add({
 export const teamPage: any = createI18n(['ja', 'en'] as const).add({
   teamhead: {
     ja: 'チーム概要',
-    en: 'Introduction of team',
+    en: 'Team',
   },
   companyhead: {
     ja: '商号',
@@ -123,7 +123,7 @@ export const teamPage: any = createI18n(['ja', 'en'] as const).add({
 export const contactPage: any = createI18n(['ja', 'en'] as const).add({
   contacthead: {
     ja: 'お問い合わせ',
-    en: 'contact',
+    en: 'Contact',
   },
 
   namehead: {
@@ -151,7 +151,7 @@ export const contactPage: any = createI18n(['ja', 'en'] as const).add({
 export const privacyPage: any = createI18n(['ja', 'en'] as const).add({
   privacyhead: {
     ja: 'プライバシーポリシー',
-    en: 'privacy policy',
+    en: 'Privacy policy',
   },
   privacycontenthead: {
     ja: '[NUMTHREE]（以下「当サイト・アプリ」といいます。）は、当サイトにおける個人情報の取扱いについて、以下のとおりプライバシーポリシー（以下「本ポリシー」といいます。）を定めます。',
@@ -219,7 +219,7 @@ export const privacyPage: any = createI18n(['ja', 'en'] as const).add({
 export const finishPage: any = createI18n(['ja', 'en'] as const).add({
   finishhead: {
     ja: '送信完了',
-    en: 'contact is sent',
+    en: 'contact is sent.',
   },
   finishcontent: {
     ja: '送信が完了しました。3秒後に戻ります。',

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="<%= common.language() %>">
-<%- include("./partials/head.ejs") %>
-
+  <%- include("./partials/head.ejs") %>
   <body class="home">
-    <div id="container">
-      <%- include("./partials/header.ejs") %>
+    <section>
+      <div id="container">
+        <%- include("./partials/header.ejs") %>
         <aside id="mainimg">
           <div class="slide slide1">
             <div>
@@ -15,9 +15,9 @@
                 <%= data.headcontent1_1() %><br />
                   <%= data.headcontent1_2() %>
               </p>
-              <p class="btn-border-radius"><a href="#">
-                  <%= common.detail() %>
-                </a></p>
+              <p class="btn-border-radius">
+                <a href="/service"><%= common.detail() %></a>
+              </p>
             </div>
           </div>
           <div class="slide slide2">
@@ -29,9 +29,9 @@
                 <%= data.headcontent2_1() %><br />
                   <%= data.headcontent2_2() %>
               </p>
-              <p class="btn-border-radius"><a href="#">
-                  <%= common.detail() %>
-                </a></p>
+              <p class="btn-border-radius">
+                <a href="/service"><%= common.detail() %></a>
+              </p>
             </div>
           </div>
           <div class="slide slide3">
@@ -43,24 +43,21 @@
                 <%= data.headcontent3_1() %><br />
                   <%= data.headcontent3_2() %>
               </p>
-              <p class="btn-border-radius"><a href="#">
-                  <%= common.detail() %>
-                </a></p>
+              <p class="btn-border-radius">
+                <a href="/service"><%= common.detail() %></a>
+              </p>
             </div>
           </div>
         </aside>
         <div id="contents">
-          <main>
             <section class="bg1">
               <h2 class="c">
-                <span class="fade-in-text">Information</span><span class="hosoku">
-                  <%= data.information() %>
-                </span>
+                <span class="fade-in-text"><%= data.information() %></span>
               </h2>
               <div class="list-grid1">
                 <div class="list">
                   <div class="text">
-                    <figure><img src="/images/yometia.jpg" alt="" /></figure>
+                    <figure><img src="/images/yometia_wide.png" alt="読めティア" /></figure>
                     <h4>
                       <%= data.content1() %>
                     </h4>
@@ -74,11 +71,9 @@
                 </div>
               </div>
             </section>
-            <section>
+            <section class="bg1-1">
               <h2>
-                <span class="fade-in-text">What's New</span><span class="hosoku">
-                  <%= data.news() %>
-                </span>
+                <span class="fade-in-text"><%= data.news() %></span>
               </h2>
               <dl class="new">
                 <dt>2026/04/01<span>
@@ -92,7 +87,8 @@
           </main>
         </div>
         <%- include("./partials/footer.ejs") %>
-    </div>
+      </div>
+    </section>
   </body>
 
 </html>

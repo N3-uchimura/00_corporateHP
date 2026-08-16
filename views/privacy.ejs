@@ -1,67 +1,67 @@
 <!DOCTYPE html>
 <html lang="ja">
-<%- include("./partials/head.ejs") %>
+  <%- include("./partials/head.ejs") %>
 
   <body>
-    <div id="container">
-      <%- include("./partials/header.ejs") %>
-        <div id="contents">
-          <main>
-            <section>
-              <h2>
-                <%= privacy.privacyhead() %>
-              </h2>
-              <h3>
-                <%= privacy.privacycontenthead() %>
-              </h3>
-              <h3>
-                <%= privacy.privacyhead1() %>
-              </h3>
-              <p>
-                <%= privacy.privacycontent1() %>
-              </p>
-              <h3>
-                <%= privacy.privacyhead2() %>
-              </h3>
-              <p>
-                <%= privacy.privacycontent2() %>
-              </p>
-              <h3>
-                <%= privacy.privacyhead3() %>
-              </h3>
-              <p>
-                <%= privacy.privacycontent3() %>
-              </p>
-              <h3>
-                <%= privacy.privacyhead4() %>
-              </h3>
-              <p>
-                <%= privacy.privacycontent4() %>
-              </p>
-              <h3>
-                <%= privacy.privacyhead5() %>
-              </h3>
-              <p>
-                <%= privacy.privacycontent5() %>
-              </p>
-              <h3>
-                <%= privacy.privacyhead6() %>
-              </h3>
-              <p>
-                <%= privacy.privacycontent6() %>
-              </p>
-              <br>
-              <p>
-                <%= privacy.privacyfooter1() %>
-              </p>
-              <p>
-                <%= privacy.privacyfooter2() %>
-              </p>
-            </section>
-          </main>
+    <main>
+      <section>
+        <div id="container">
+          <%- include("./partials/header.ejs") %>
+          <div id="contents">
+            <h2>
+              <%= privacy.privacyhead() %>
+            </h2>
+            <h3>
+              <%= privacy.privacycontenthead() %>
+            </h3>
+            <h3>
+              <%= privacy.privacyhead1() %>
+            </h3>
+            <p>
+              <%= privacy.privacycontent1() %>
+            </p>
+            <h3>
+              <%= privacy.privacyhead2() %>
+            </h3>
+            <p>
+              <%= privacy.privacycontent2() %>
+            </p>
+            <h3>
+              <%= privacy.privacyhead3() %>
+            </h3>
+            <p>
+              <%= privacy.privacycontent3() %>
+            </p>
+            <h3>
+              <%= privacy.privacyhead4() %>
+            </h3>
+            <p>
+              <%= privacy.privacycontent4() %>
+            </p>
+            <h3>
+              <%= privacy.privacyhead5() %>
+            </h3>
+            <p>
+              <%= privacy.privacycontent5() %>
+            </p>
+            <h3>
+              <%= privacy.privacyhead6() %>
+            </h3>
+            <p>
+              <%= privacy.privacycontent6() %>
+            </p>
+            <br>
+            <p>
+              <%= privacy.privacyfooter1() %>
+            </p>
+            <p>
+              <%= privacy.privacyfooter2() %>
+            </p>
+          </div>
         </div>
-        <%- include("./partials/footer.ejs") %>
-    </div>
+      </section>
+    </main>
+    <%- include("./partials/footer.ejs") %>
   </body>
 
 </html>

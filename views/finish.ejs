@@ -4,17 +4,17 @@
   <meta http-equiv="refresh" content="3;URL=https://numthree.net/" />
 
   <body>
-    <div id="container">
-      <%- include("./partials/header.ejs") %>
-      <div id="contents">
-        <main>
-          <section>
-            <h2><%= finish.finishhead() %><span class="hosoku">Contact</span></h2>
+    <main>
+      <section>
+        <div id="container">
+          <%- include("./partials/header.ejs") %>
+          <div id="contents">
+            <h2><span class="hosoku"><%= finish.finishhead() %></span></h2>
             <p><%= finish.finishcontent() %></p>
-          </section>
-        </main>
-      </div>
-      <%- include("./partials/footer.ejs") %>
-    </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <%- include("./partials/footer.ejs") %>
   </body>
 </html>

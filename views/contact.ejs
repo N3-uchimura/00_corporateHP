@@ -4,11 +4,11 @@
   <link rel="stylesheet" href="/css/button.css" />
 
   <body>
-    <div id="container">
-      <%- include("./partials/header.ejs") %>
-      <div id="contents">
-        <main>
-          <section>
+    <main>
+      <section>
+        <div id="container">
+        <%- include("./partials/header.ejs") %>
+          <div id="contents">
             <h2><%= contact.contacthead() %></h2>
             <form id="registForm" name="form1" method="post" action="/form">
               <table class="ta1">
@@ -64,9 +64,9 @@
                 </button>
               </p>
             </form>
-          </section>
-        </main>
-      </div>
+          </div>
+        </section>
+      </main>
       <%- include("./partials/footer.ejs") %>
       <script>
         $(function () {
@@ -74,6 +74,5 @@
         });
       </script>
       <script src="/js/validation.js"></script>
-    </div>
   </body>
 </html>

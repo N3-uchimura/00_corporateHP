@@ -1,38 +1,53 @@
 <!DOCTYPE html>
 <html lang="ja">
-<%- include("./partials/head.ejs") %>
+  <%- include("./partials/head.ejs") %>
 
   <body>
-    <div id="container">
-      <%- include("./partials/header.ejs") %>
-        <div id="contents">
-          <main>
-            <section class="yometia">
-              <h2>
-                <%= yometia.yometiahead() %>
-              </h2>
-              <p>
-                <%= yometia.yometiacontent1_1() %><br />
-                  <%= yometia.yometiacontent1_2() %>
-              </p>
-              <div class="flex-thumbnails">
-                <div class="thumbnail-view-parts"></div>
-                <div class="thumbnail-parts">
-                  <img src="/images/book.png" alt="" />
-                  <img src="/images/author.png" alt="" />
-                  <img src="/images/character.png" alt="" />
-                  <img src="/images/book_detail.png" alt="" />
-                  <img src="/images/author_detail.png" alt="" />
-                  <img src="/images/login.png" alt="" />
-                </div>
+    <main>
+      <section class="yometia">
+        <div id="container">
+          <%- include("./partials/header.ejs") %>
+          <div id="contents">
+            <h2 class="c">
+              <%= yometia.yometiahead() %>
+            </h2>
+            <p>
+              <%= yometia.yometiacontent1_1() %><br />
+                <%= yometia.yometiacontent1_2() %>
+            </p>
+            <div class="flex-head">
+              <figure><img id="maining" src="/images/yometia_wide.png" alt="読めティア" /></figure>
+              <div class="flex-column">
+                <figure>
+                  <figcaption>↓↓GooglePlay</figcaption>
+                  <a href="https://play.google.com/store/apps/details?id=net.numthree.yometia"><img
+                      id="googleplay" src="/images/googleplay.png" alt="GooglePlay"></a>
+                </figure>
+                <figure>
+                  <figcaption>↓↓AppStore</figcaption>
+                  <a href="https://apps.apple.com/jp/app/yometia/id6787374713"><img
+                      id="appstore" src="/images/appstore.png" alt="AppStore"></a>
+                </figure>
               </div>
-            </section>
-          </main>
+            </div>
+            <div class="flex-thumbnails">
+              <div class="thumbnail-view-parts"></div>
+              <div class="thumbnail-parts">
+                <img src="/images/sc/book.png" alt="作品ページ" />
+                <img src="/images/sc/author.png" alt="著者ページ" />
+                <img src="/images/sc/character.png" alt="キャラページ" />
+                <img src="/images/sc/book_detail.png" alt="作品詳細ページ" />
+                <img src="/images/sc/author_detail.png" alt="著者詳細ページ" />
+                <img src="/images/sc/login.png" alt="ログインページ" />
+                <img src="/images/sc/book_reading.png" alt="朗読ページ" />
+                <img src="/images/sc/setting.png" alt="設定ページ" />
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
-    <div id="footer">
-      <%- include("./partials/footer.ejs") %>
-    </div>
+      </section>
+    </main>
+    <%- include("./partials/footer.ejs") %>
   </body>
 
 </html>
