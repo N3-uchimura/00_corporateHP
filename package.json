@@ -5,7 +5,7 @@
   "description": "numthree corporate site",
   "main": "form.ts",
   "scripts": {
-    "start": "tsx form.ts"
+    "start": "npx tsx form.ts"
   },
   "keywords": [],
   "author": {
