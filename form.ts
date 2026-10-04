@@ -14,7 +14,7 @@ import * as path from 'node:path'; // パス用
 import { config as dotenv } from 'dotenv'; // 環境変数用
 import express from 'express'; // http通信用
 import helmet from 'helmet'; // XSS対策用
-import { xss } from 'express-xss-sanitizer'; // サニタイズ用
+import sanitizeHtml from 'sanitize-html'; // サイニタイズ用
 import Logger from './class/Logger'; // ロガー
 import NodeCache from 'node-cache'; // node-cache
 import {
@@ -64,8 +64,6 @@ app.use(
 app.use(express.static(path.join(__dirname, 'public'))); // public使用
 app.set('views', path.join(__dirname, 'views')); // views使用
 app.set('view engine', 'ejs'); // ejs使用
-// XSS対策
-app.use(xss());
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -427,9 +425,9 @@ app.post('/form', async (req: any, res: any) => {
       contact = enContact;
     }
     // 受け取りデータ
-    const customername: any = req.body.customername ?? '';
-    const customermail: any = req.body.customermail ?? '';
-    const content: any = req.body.content ?? '';
+    const customername: any = sanitizeHtml(req.body.customername) ?? '';
+    const customermail: any = sanitizeHtml(req.body.customermail) ?? '';
+    const content: any = sanitizeHtml(req.body.content) ?? '';
     // 対象データ
     const insertDataArgs: insertargs = {
       table: 'contact', // テーブル
@@ -469,7 +467,7 @@ app.post('/language', async (req: any, res: any) => {
     // モード
     logger.info('corporate: language post');
     // cache
-    cacheMaker.set('language', req.body.language);
+    cacheMaker.set('language', sanitizeHtml(req.body.language));
     // res
     res.send('ok');
 
@@ -489,7 +487,7 @@ app.post('/confirmed', async (req: any, res: any) => {
     // モード
     logger.info('corporate: form post');
     // 受け取りデータ
-    const customerid: any = req.body.customerid;
+    const customerid: any = sanitizeHtml(req.body.customerid);
     // なしならエラー
     if (!customerid) {
       // エラー
